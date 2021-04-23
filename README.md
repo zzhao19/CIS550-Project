@@ -7,4 +7,6 @@ Each member needs to
 3. frontend: create .css files for each feature page using basic settings in the **comics -> client -> src -> style** folder
 
 Note:
-the comics -> db-config.js file has been updated with our new configs, haven't tested whether it works tho
+1. the comics -> db-config.js file has been updated with our new configs, haven't tested whether it works tho
+2. please ignore the 0 files, they are just placeholders for yet empty folders
+
