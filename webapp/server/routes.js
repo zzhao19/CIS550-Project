@@ -172,6 +172,52 @@ const bestMoviesPerDecadeGenre = (req, res) => {
     else res.json(rows);
   });
 
+  /* ---- (Query 9, Reccomend top 10 movies based on shared characters) ---- */
+  const mov = req.params.title;
+  console.log(mov);
+  const query = `
+    WITH temp AS (
+    SELECT characterID
+    FROM CastIn
+    WHERE Movie = '${mov}'
+    )
+     
+    SELECT Movie
+    FROM Castin c
+    JOIN temp t ON c.characterID = t.characterID 
+    WHERE c.Movie <> '${mov}'
+    GROUP BY Movie
+    ORDER BY COUNT(*) DESC 
+    LIMIT 10;
+
+  `
+  connection.query(query, (err, rows, fields) => {
+    if (err) console.log(err);
+    else res.json(rows);
+  });
+
+
+  /* ---- (Query 10, Find all Superheroes that have appeared together) ---- */
+  const mov = req.params.title;
+  console.log(mov);
+  const query = `
+      WITH temp AS (
+      SELECT name
+      FROM Characters c1
+      JOIN Castin c2 on c1.CharacterID = c2.CharacterID
+      WHERE c2.Moive =  '${mov}'
+      )
+      
+      SELECT * 
+      FROM CharInfo c
+      JOIN temp t ON c.Character = t.name
+
+  `
+  connection.query(query, (err, rows, fields) => {
+    if (err) console.log(err);
+    else res.json(rows);
+  });
+
 
 };
 
