@@ -1,0 +1,17 @@
+.comics-container {
+  display: flex;
+  flex-flow: column wrap;
+  margin-top: 10px;
+}
+
+.comics-container .comic, .comics-container .comicResults {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  height: 40px;
+  padding: 0 10px;
+}
+
+.comic .header, .comicResults .title, .comicResults .id, .comicResults .rating {
+  flex: 1 0 10%;
+}
