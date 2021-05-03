@@ -1,12 +1,14 @@
 .comics-container {
   display: flex;
   flex-flow: column wrap;
+  font-family: sans-serif;
   margin-top: 10px;
 }
 
 .comics-container .comic, .comics-container .comicResults {
   display: flex;
   flex-flow: row nowrap;
+  font-family: sans-serif;
   align-items: center;
   height: 40px;
   padding: 0 10px;
