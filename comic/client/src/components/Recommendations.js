@@ -155,7 +155,7 @@ export default class Recommendations extends React.Component {
 			<div className="Recommendations">
 				<PageNavbar active="bestcomics" />
 
-				<h1> NEED RECOMMENDATIONS? </h1>
+				<h1 class='text-center text-light'> <br/> NEED RECOMMENDATIONS? </h1>
 
                 <Tabs>
 
@@ -184,7 +184,7 @@ export default class Recommendations extends React.Component {
                                     <button className="submit-btn" id="submitBtn" onClick={this.submitTitle}>Submit</button>
                             </div>
 
-                            <div className="jumbotron jumbotron-comicsresult">
+                            <div className="jumbotron">
                                 <div className="comics-container">
                                     <div className="comic">
                                       <div className="header0"><strong>Title</strong></div>
@@ -203,7 +203,7 @@ export default class Recommendations extends React.Component {
 
                     <TabPanel>
                         <div className="container bestcharacters-container">
-                            <div className="jumbotron">
+                            <div className="jumbotron jumbotron-comicsresult">
                                 <div className="h5">Best Characters For You</div>
 
                                     we

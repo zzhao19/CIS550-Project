@@ -16,3 +16,17 @@ code {
 .jumbotron-test {
   width: 50%;
 }
+
+
+.jumbotron-home{
+  padding-top: 0px;
+  padding-bottom:0px;
+  background-image:url('https://github.com/zzhao19/CIS550-Project/blob/main/webapp/client/public/bg.jpg?raw=true');
+  background-size: cover;
+  background: contain;
+  width: 100%; /* make sure to define width to fill container */
+  height: 100%; /* define the height in pixels or make sure   */
+                  /* you have something in your div with height */
+                  /* so you can see your image */
+  max-width:1400px;  /* define the max width */
+}

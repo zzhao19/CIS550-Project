@@ -69,3 +69,14 @@
   .scores-header .header, .score .score {
     flex: 1 0 25%;
   }
+
+
+  .home-containe{
+    margin: 10px 0;
+    position: relative;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    height: 100 px;
+    border-bottom: 1px solid #ddd;
+  }

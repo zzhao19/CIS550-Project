@@ -6,6 +6,7 @@ import {
 } from 'react-router-dom';
 import Recommendations from './Recommendations';
 import PowerCompete from './PowerCompete';
+import Home from './Home'
 
 export default class App extends React.Component {
 
@@ -17,7 +18,7 @@ export default class App extends React.Component {
 						<Route
 							exact
 							path="/"
-							render={() => <PowerCompete />}
+							render={() => <Home />}
 						/>
 						<Route
 							path="/recommendations"
