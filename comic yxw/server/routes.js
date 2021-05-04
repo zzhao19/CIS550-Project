@@ -71,7 +71,7 @@ const recComics = (req, res) => {
         GROUP BY comicID, NumCha
         )
 
-    SELECT title, issueYear, issueNumber, NumCha, CommonCharacters, description
+    SELECT title, issueYear, issueNumber, NumCha, CommonCharacters
     FROM temp5 t5 JOIN Comics c ON t5.comicID = c.comicID
     ORDER BY NumCha DESC, issueYear DESC;
     `;

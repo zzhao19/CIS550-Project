@@ -11,7 +11,6 @@ export default class BestComicsRow extends React.Component {
 				<div className="issueNumber">{this.props.issueNumber}</div>
 				<div className="numChar">{this.props.numChar}</div>
 				<div className="commonChar">{this.props.commonChar}</div>
-				<div className="description">{this.props.description}</div>
 			</div>
 		);
 	};
