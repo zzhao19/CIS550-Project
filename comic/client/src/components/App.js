@@ -5,6 +5,7 @@ import {
 	Switch
 } from 'react-router-dom';
 import Recommendations from './Recommendations';
+import PowerCompete from './PowerCompete';
 
 export default class App extends React.Component {
 
