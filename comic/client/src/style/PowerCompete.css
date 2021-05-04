@@ -1,0 +1,71 @@
+.aligns-container {
+    /* margin: 10px 0; */
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    /* border-bottom: 1px solid #ddd; */
+  }
+  
+  .aligns-container .align {
+    flex: 1 0 20%;
+    margin: 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  
+  .aligns-container .align:hover {
+    background-color: #ddd;
+  }
+  
+  
+  .chars-container {
+      /* margin: 10px 0; */
+      display: flex;
+      flex-flow: row wrap;
+      justify-content: flex-start;
+      /* border-bottom: 1px solid #ddd; */
+    }
+    
+  .chars-container .char {
+    flex: 1 0 20%;
+    margin: 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    box-sizing: border-box;
+  }
+  
+  .chars-container .char:hover {
+    background-color: #ddd;
+  }
+  
+  .powers-container .powers-header, .results-container .power {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    height: 40px;
+  }
+  
+  .power .name, .powers-header .header-lg {
+    flex: 1 0 50%;
+  }
+  
+  .powers-header .header, .power .name, .power .name {
+    flex: 1 0 25%;
+  }
+  
+  
+  .scores-container .scores-header, .results-container .score {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    height: 40px;
+  }
+  
+  .score .category, .scores-header .header-lg {
+    flex: 1 0 50%;
+  }
+  
+  .scores-header .header, .score .score {
+    flex: 1 0 25%;
+  }

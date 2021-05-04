@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  opacity: 0.95;
 }
 
 code {
@@ -12,3 +13,6 @@ code {
     monospace;
 }
 
+.jumbotron-test {
+  width: 50%;
+}
