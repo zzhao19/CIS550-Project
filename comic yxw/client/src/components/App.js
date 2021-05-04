@@ -4,9 +4,7 @@ import {
 	Route,
 	Switch
 } from 'react-router-dom';
-import Dashboard from './Dashboard';
 import Recommendations from './Recommendations';
-import BestComics from './BestComics';
 
 export default class App extends React.Component {
 
@@ -16,22 +14,8 @@ export default class App extends React.Component {
 				<Router>
 					<Switch>
 						<Route
-							exact
-							path="/"
-							render={() => <Dashboard />}
-						/>
-						<Route
-							exact
-							path="/dashboard"
-							render={() => <Dashboard />}
-						/>
-						<Route
 							path="/recommendations"
 							render={() => <Recommendations />}
-						/>
-						<Route
-							path="/bestcomics"
-							render={() => <BestComics />}
 						/>
 					</Switch>
 				</Router>
