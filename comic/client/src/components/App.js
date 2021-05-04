@@ -17,6 +17,11 @@ export default class App extends React.Component {
 							path="/recommendations"
 							render={() => <Recommendations />}
 						/>
+						<Route
+							exact
+							path="/power"
+							render={() => <PowerCompete />}
+						/>
 					</Switch>
 				</Router>
 			</div>
