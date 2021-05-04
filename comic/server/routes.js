@@ -5,7 +5,7 @@ config.connectionLimit = 10;
 const connection = mysql.createPool(config);
 
 /* -------------------------------------------------- */
-/* ------------------- Route Handlers --------------- */
+/* ------------------- Recommendation --------------- */
 /* -------------------------------------------------- */
 
 const getTitle = (req, res) => {
@@ -172,9 +172,135 @@ const recCharacters = (req, res) => {
   });
 };
 
+
+/* -------------------------------------------------- */
+/* ----------------------- Power -------------------- */
+/* -------------------------------------------------- */
+
+const getAlignment = (req, res) => {
+
+  const query = `
+
+    with t as (select distinct Alignment 
+               from Charinfo 
+               order by Alignment desc
+               limit 4)
+
+    select Alignment as alignment
+    from t 
+    order by Alignment
+    limit 3;
+  `;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
+
+const getTop30Sups = (req, res) => {
+  const alignInput = req.params.align;
+
+  const query = `
+  with t as (select c.Character cha, Alignment, count(*) cnt 
+            from Charinfo  c
+            where Alignment <> '' and OtherInfo = ''
+            group by cha, Alignment 
+            order by cnt desc),
+      
+      t2 as (select cha, Alignment, cnt, 
+                    row_number() over(partition by cha order by cnt desc, Alignment) rnk
+            from t),
+      
+      t3 as (select characterID, count(distinct comicID) cnt
+            from Chatocomics
+            group by characterID),
+      
+      t4 as (select t3.cnt, c.Name
+            from t3
+            join Characters c
+            using(characterID)),
+      
+      t5 as (select * 
+            from t2 
+            where rnk = 1),
+      
+      t6 as (select t4.*, t5.Alignment
+            from t4
+            join t5
+            on t4.Name = t5.cha)
+
+  select Name as name 
+  from t6
+  where Alignment = '${alignInput}'
+  order by cnt desc
+  limit 30;
+  `;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
+
+
+/* 1.4.2 */
+const getTopSupsPower = (req, res) => {
+
+  const supInput = req.params.char;
+
+
+  const query = `
+    select power
+    from Power p 
+    where p.name = '${supInput}';
+  `;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
+
+const getScores = (req, res) => {
+
+  const supInput = req.params.char;
+
+  const query = `
+    select Category, Score
+    from Chastats c
+    where c.Name = '${supInput}';
+  `;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
+
 module.exports = {
     getTitle: getTitle,
     recComics: recComics,
     getCharacter: getCharacter,
-    recCharacters: recCharacters
+    recCharacters: recCharacters,
+    getAlignment: getAlignment,
+    getTop30Sups: getTop30Sups,
+    getTopSupsPower: getTopSupsPower,
+    getScores: getScores
 };

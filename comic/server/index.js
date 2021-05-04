@@ -13,13 +13,19 @@ app.use(bodyParser.urlencoded({extended: false}));
 /* ------------------- Route handler registration ----------------- */
 /* ---------------------------------------------------------------- */
 
-/* ---- (Best Movies) ---- */
+/* ---- (Recommendation 1) ---- */
 app.get('/title', routes.getTitle);
 app.get('/name', routes.getCharacter);
 
-/* ---- Q3b (Best Movies) ---- */
+/* ---- (Recommendation 2) ---- */
 app.get('/bestcomics/:title', routes.recComics);
 app.get('/bestcharacters/:name', routes.recCharacters);
+
+/* ---- (Power) ---- */
+app.get('/power', routes.getAlignment);
+app.get('/power/:align', routes.getTop30Sups);
+app.get('/power/:align/:char', routes.getTopSupsPower);
+app.get('/power/:align/:char/:char', routes.getScores);
 
 
 app.listen(8081, () => {
