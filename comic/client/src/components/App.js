@@ -5,6 +5,8 @@ import {
 	Switch
 } from 'react-router-dom';
 import Recommendations from './Recommendations';
+import PowerCompete from './PowerCompete';
+import Home from './Home'
 
 export default class App extends React.Component {
 
@@ -14,9 +16,24 @@ export default class App extends React.Component {
 				<Router>
 					<Switch>
 						<Route
+							exact
+							path="/"
+							render={() => <Home />}
+						/>
+						<Route
 							path="/recommendations"
 							render={() => <Recommendations />}
 						/>
+						<Route
+							exact
+							path="/power"
+							render={() => <PowerCompete />}
+						/>
+						{/* <Route
+							exact
+							path="/radar"
+							render={() => <Radar />}
+						/> */}
 					</Switch>
 				</Router>
 			</div>

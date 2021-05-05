@@ -175,9 +175,9 @@ describe('Best of Decade and Genre page', () => {
 
 });
 
-// Resources:
-// https://lavrton.com/javascript-loops-how-to-handle-async-await-6252dd3c795/
-// https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Your_own_automation_environment
-// https://seleniumhq.github.io/selenium/docs/api/javascript/index.html
-// https://www.npmjs.com/package/selenium-webdriver
-// https://mochajs.org/#using-async-await
+// // Resources:
+// // https://lavrton.com/javascript-loops-how-to-handle-async-await-6252dd3c795/
+// // https://developer.mozilla.org/en-US/docs/Learn/Tools_and_testing/Cross_browser_testing/Your_own_automation_environment
+// // https://seleniumhq.github.io/selenium/docs/api/javascript/index.html
+// // https://www.npmjs.com/package/selenium-webdriver
+// // https://mochajs.org/#using-async-await

@@ -5,6 +5,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  opacity: 0.95;
 }
 
 code {
@@ -12,3 +13,30 @@ code {
     monospace;
 }
 
+.jumbotron-test {
+  width: 45%;
+}
+
+.jumbotron-left {
+  position: relative;
+  left: -2.7%;
+}
+
+.jumbotron-right {
+  position: relative;
+  right: -2.7%;
+}
+
+
+.jumbotron-home{
+  padding-top: 0px;
+  padding-bottom:0px;
+  background-image:url('https://github.com/zzhao19/CIS550-Project/blob/main/webapp/client/public/bg.jpg?raw=true');
+  background-size: cover;
+  background: contain;
+  width: 100%; /* make sure to define width to fill container */
+  height: 100%; /* define the height in pixels or make sure   */
+                  /* you have something in your div with height */
+                  /* so you can see your image */
+  max-width:1400px;  /* define the max width */
+}
