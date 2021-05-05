@@ -49,6 +49,7 @@ let options = {
     },
     yaxis: {
       tickAmount: 6,
+      max: 100,
       show: false,
       showAlways: false,
       showForNullSeries: false,

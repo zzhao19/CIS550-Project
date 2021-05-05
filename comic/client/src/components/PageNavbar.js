@@ -35,7 +35,7 @@ export default class PageNavbar extends React.Component {
 			<div className="PageNavbar">
 				<nav className="navbar navbar-expand-lg navbar-light bg-light">
 				  {/* <Link to="/"><button class='btn btn-light font-weight-bold text-uppercase'>Home</button></Link> */}
-				  <a className="nav-item nav-link active text-dark" href="/">Home</a>
+				  <a className="nav-item nav-link active text-dark" href="/"><b>Home</b></a>
 			      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
 			        <div className="navbar-nav">
 			        	{this.state.navDivs}
