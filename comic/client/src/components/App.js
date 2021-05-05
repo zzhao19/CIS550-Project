@@ -29,6 +29,11 @@ export default class App extends React.Component {
 							path="/power"
 							render={() => <PowerCompete />}
 						/>
+						{/* <Route
+							exact
+							path="/radar"
+							render={() => <Radar />}
+						/> */}
 					</Switch>
 				</Router>
 			</div>

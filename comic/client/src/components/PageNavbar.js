@@ -28,11 +28,12 @@ export default class PageNavbar extends React.Component {
 		});
 	};
 
+	
+
 	render() {
 		return (
 			<div className="PageNavbar">
 				<nav className="navbar navbar-expand-lg navbar-light bg-light">
-				  {/* <button className="navbar-brand center">ComiCom</span> */}
 				  {/* <Link to="/"><button class='btn btn-light font-weight-bold text-uppercase'>Home</button></Link> */}
 				  <a className="nav-item nav-link active text-dark" href="/">Home</a>
 			      <div className="collapse navbar-collapse" id="navbarNavAltMarkup">

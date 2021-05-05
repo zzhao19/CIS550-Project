@@ -279,9 +279,9 @@ const getScores = (req, res) => {
   const supInput = req.params.char;
 
   const query = `
-    select Category, Score
+    select c.Category, Score
     from Chastats c
-    where c.Name = '${supInput}';
+    where c.Name = '${supInput}' and c.Category <> 'Total';
   `;
 
   connection.query(query, function(err, rows, fields){

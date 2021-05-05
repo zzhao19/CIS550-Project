@@ -14,7 +14,17 @@ code {
 }
 
 .jumbotron-test {
-  width: 50%;
+  width: 45%;
+}
+
+.jumbotron-left {
+  position: relative;
+  left: -2.7%;
+}
+
+.jumbotron-right {
+  position: relative;
+  right: -2.7%;
 }
 
 

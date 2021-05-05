@@ -1,11 +1,14 @@
 import React from 'react';
 import '../style/PowerCompete.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+// import Chart from 'react-apexcharts'
 import PageNavbar from './PageNavbar';
 import CharButton from './CharButton';
 import AlignButton from './AlignButton';
 import PowerCompeteRow from './PowerCompeteRow';
 import ScoreTableRow from './ScoreTableRow';
+import {options} from './RadarElements';
+import Chart from 'react-apexcharts'
 
 
 export default class PowerCompete extends React.Component {
@@ -20,7 +23,9 @@ export default class PowerCompete extends React.Component {
         powers: [],
         scores: [],
         selectedAlign: "",
-        selectedChar: ""
+        selectedChar: "",
+        series:[],
+        options:options
       };
 
       this.showCharacters = this.showCharacters.bind(this);
@@ -104,8 +109,7 @@ export default class PowerCompete extends React.Component {
     };
   
 
-    /* ---- Q1b (Dashboard) ---- */
-    /* Set this.state.movies to a list of <DashboardMovieRow />'s. */
+
     showPowers(char) {
       const power_url = 'http://localhost:8081/power/:align/' + char;
       fetch(power_url,
@@ -163,15 +167,35 @@ export default class PowerCompete extends React.Component {
       .then(scores => {
         if (!scores) return;
         console.log(scores);
-        const rows = scores.map((scoreObj, i) => 
+        // const rows = scores.map((scoreObj, i) => 
+        //     <ScoreTableRow
+        //       category={scoreObj.Category}
+        //       score={scoreObj.Score}
+        //     />
+        //     );
+
+        let rows = null;
+        let scoreArr = null;
+
+        if (scores.length !== 0) {
+            rows = scores.map((scoreObj, i) => 
             <ScoreTableRow
               category={scoreObj.Category}
               score={scoreObj.Score}
             />
             );
+            scoreArr = scores.map((scoreObj, i) => scoreObj.Score);
+        } else {
+            rows = ['Oops, data not found'];
+            scoreArr = [0,0,0,0,0,0]
+        }
+
+        const seriesName = char;
 
         this.setState({
-          scores: rows
+          scores: rows,
+          series: [{name: seriesName,
+            data: scoreArr}]
         });
         console.log(rows);
       }, err => {
@@ -202,44 +226,53 @@ export default class PowerCompete extends React.Component {
                 {this.state.characters}
               </div>
             </div>
-  
-            <br />
-            <div className="jumbotron jumbotron-test">
-              <div className="powers-container">
-                <div className="powers-header">
-                  <div className="header-lg"><strong><var>{this.state.selectedChar}</var>Superpowers</strong></div>
+
+
+            <div class='container'>
+                <div class='row'>
+                    <div class="col-lg-6">
+                    <div className="jumbotron jumbotron-left">
+                        <div className="powers-container">
+                            <div className="powers-header">
+                            <div className="header-lg"><strong><var>{this.state.selectedChar}</var>Superpowers</strong></div>
+                            </div>
+                            <div className="results-container" id="results">
+                            {this.state.powers}
+                            </div>
+                        </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-6">
+                        <div className="jumbotron jumbotron-right">
+                            <div className="scores-container">
+                                <div className="scores-header">
+                                <div className="header-lg"><strong>Dimension</strong></div>
+                                <div className="header"><strong>Score</strong></div>
+                                </div>
+                                <div className="results-container" id="results">
+                                {this.state.scores}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div className="jumbotron jumbotron-right">
+                            <div id="chart">
+                                <Chart options={this.state.options} series={this.state.series} type="radar" height={350} />
+                            </div>
+                            
+
+
+                        </div>
+
+                        
+                    </div>
+                    
+                    
                 </div>
-                <div className="results-container" id="results">
-                  {this.state.powers}
-                </div>
-              </div>
             </div>
-
-
-            <br />
-            <div className="jumbotron jumbotron-test">
-              <div className="scores-container">
-                <div className="scores-header">
-                  <div className="header-lg"><strong>Dimension</strong></div>
-                  <div className="header"><strong>Score</strong></div>
-                </div>
-                <div className="results-container" id="results">
-                  {this.state.scores}
-                </div>
-              </div>
-            </div>
-
-            {/* <br/>
-            <div class="jumbotron">
-              <div class="row">
-              <img src='https://upload.wikimedia.org/wikipedia/en/9/91/CaptainAmerica109.jpg'/>
-              </div>
-
-              <div class="row">
-              <img src='https://upload.wikimedia.org/wikipedia/en/4/47/Iron_Man_%28circa_2018%29.png'/>
-              </div>
-
-            </div> */}
 
           </div>
 
