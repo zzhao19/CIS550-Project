@@ -245,6 +245,13 @@ export default class PowerCompete extends React.Component {
                     </div>
 
                     <div class="col-lg-6">
+                        
+                        <div className="jumbotron jumbotron-right">
+                            <div id="chart">
+                                <Chart options={this.state.options} series={this.state.series} type="radar" height={350} />
+                            </div>
+                        </div>
+
                         <div className="jumbotron jumbotron-right">
                             <div className="scores-container">
                                 <div className="scores-header">
@@ -255,16 +262,6 @@ export default class PowerCompete extends React.Component {
                                 {this.state.scores}
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div className="jumbotron jumbotron-right">
-                            <div id="chart">
-                                <Chart options={this.state.options} series={this.state.series} type="radar" height={350} />
-                            </div>
-                            
-
-
                         </div>
 
                         
