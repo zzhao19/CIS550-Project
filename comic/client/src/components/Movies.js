@@ -136,7 +136,7 @@ export default class Recommendations extends React.Component {
 		return (
 			<div className="Recommendations">
 				<PageNavbar active="bestcomics" />
-				<h1 class='text-center text-light'> <br/> Choose your favorite movie, and we'll choose some comics for you! </h1>
+				<h2 class='text-center text-light'> <br/> Choose your favorite movie, and we'll choose some comics for you! </h2>
                 <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
 
                     <Tab eventKey="home" title="Home">
@@ -206,7 +206,8 @@ export default class Recommendations extends React.Component {
                             <div className="jumbotron">
                                 <div className="comics-container">
                                     <div className="comic">
-                                        <div className="header0"><strong>Name</strong></div>
+                                        <div className="header0"><strong>New cast... in a parallel universe!
+                                        </strong></div>
                                         <div className="header1"><strong></strong></div>
                                         <div className="header2"><strong></strong></div>
                                     </div>
