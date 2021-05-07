@@ -171,8 +171,92 @@ const recCharacters = (req, res) => {
         res.json(rows);}
   });
 };
+/* -------------------------------------------------- */
+/* ----------------------- Movie -------------------- */
+/* -------------------------------------------------- */
+const getMovies = (req, res) => {
 
+  const query = `
+    SELECT movie FROM CastIn;
+  `;
 
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
+const getSimilarComics = (req, res) => {
+
+  const title = req.params.movie;
+
+  const query = `
+    WITH temp AS (
+    SELECT c.characterID, cc.comicID
+    FROM CastIn c 
+    JOIN Chatocomics cc on c.characterID = cc.characterID
+    WHERE c.Movie = '${title}'
+    )
+     
+    SELECT cc.Title, cc.issueYear, cc.issueNumber
+    FROM CastIn c
+    JOIN temp t ON c.characterID = t.characterID 
+    JOIN Comics cc on t.comicID = cc.comicID
+    WHERE c.Movie LIKE '%${title}%'
+    GROUP BY cc.comicID
+    ORDER BY COUNT(*) DESC 
+    LIMIT 10;
+  `;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
+const getAlternate = (req, res) => {
+
+  const title = req.params.movie;
+
+  const query = `
+    (WITH t1 as (SELECT DISTINCT cc.comicID as comicID
+	FROM CastIn c 
+    JOIN Chatocomics cc on c.characterID = cc.characterID
+	WHERE c.Movie = '${title}'),
+    
+    t2 AS(SELECT DISTINCT cc.characterID, cc.comicID, Characters.name
+    FROM Chatocomics cc
+    JOIN Characters on Characters.characterID = cc.characterID
+    WHERE cc.comicID IN (SELECT comicID FROM t1 )),
+    
+    t3 AS(SELECT cd.Alignment, t2.characterID, t2.comicID, t2.name
+        FROM Chadetail cd JOIN t2 on t2.name= cd.Name
+        WHERE cd.Alignment <> 'Neutral')
+    SELECT DISTINCT name, alignment as alignment FROM t3
+    WHERE alignment = 'good'
+    ORDER BY RAND()
+    LIMIT 3)
+    UNION
+    (SELECT DISTINCT name, alignment as alignment FROM t3
+    WHERE alignment = 'bad'
+    ORDER BY RAND()
+    LIMIT 3);`
+  ;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
 /* -------------------------------------------------- */
 /* ----------------------- Power -------------------- */
 /* -------------------------------------------------- */
@@ -302,5 +386,8 @@ module.exports = {
     getAlignment: getAlignment,
     getTop30Sups: getTop30Sups,
     getTopSupsPower: getTopSupsPower,
-    getScores: getScores
+    getScores: getScores,
+    getSimilarComics: getSimilarComics,
+    getMovies: getMovies,
+    getAlternate: getAlternate
 };

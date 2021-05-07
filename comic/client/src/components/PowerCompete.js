@@ -65,6 +65,7 @@ export default class PowerCompete extends React.Component {
           this.setState({
             alignment: alignDivs
           });
+          console.log(this.state.alignment)
         }, err => {
           // Print the error if there is one.
           console.log(err);

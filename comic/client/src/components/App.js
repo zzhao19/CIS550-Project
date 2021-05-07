@@ -7,6 +7,7 @@ import {
 import Recommendations from './Recommendations';
 import PowerCompete from './PowerCompete';
 import Home from './Home'
+import Movies from './Movies'
 
 export default class App extends React.Component {
 
@@ -28,6 +29,11 @@ export default class App extends React.Component {
 							exact
 							path="/power"
 							render={() => <PowerCompete />}
+						/>
+						<Route
+							exact
+							path="/movies"
+							render={() => <Movies />}
 						/>
 						{/* <Route
 							exact

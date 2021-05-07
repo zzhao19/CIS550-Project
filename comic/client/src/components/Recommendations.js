@@ -153,6 +153,7 @@ export default class Recommendations extends React.Component {
 
 		return (
 			<div className="Recommendations">
+
 				<PageNavbar active="bestcomics" />
 
 				<h1 class='text-center text-light'> <br/> NEED RECOMMENDATIONS? </h1>

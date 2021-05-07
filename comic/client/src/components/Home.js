@@ -33,8 +33,9 @@ export default class Dashboard extends React.Component {
                     <div class='card'>
                         <img src='https://upload.wikimedia.org/wikipedia/en/4/47/Iron_Man_%28circa_2018%29.png'></img>
                             <div class='card-body'>
-                                <h5 class='card-title'>Page 1</h5>
-                                <button class='btn btn-dark'>Go to Page 1</button>
+                                <h5 class='card-title'>Movies</h5>
+                                <Link to="/movies"><button class='btn btn-dark'>Get some reccomendations!
+                                </button></Link>
                             </div>
                     </div>
                 </div>

@@ -1,8 +1,9 @@
 .jumbotron-comicsearch{
   position: relative;
-  left: -15%;
+  margin: auto;
   width: 80%;
   opacity: 0.9;
+  max-height: 50px;
 }
 
 .jumbotron-comicsresult{
@@ -11,6 +12,7 @@
   width: 130%;
   opacity: 0.9;
 }
+
 
 .comics-container {
   display: flex;

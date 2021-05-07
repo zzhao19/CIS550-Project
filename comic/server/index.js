@@ -27,6 +27,10 @@ app.get('/power/:align', routes.getTop30Sups);
 app.get('/power/:align/:char', routes.getTopSupsPower);
 app.get('/power/:align/:char/:char', routes.getScores);
 
+/* ---- (Movie) ---- */
+app.get('/movie', routes.getMovies);
+app.get('/movie/:movie', routes.getSimilarComics);
+app.get('/movie/alt/:movie', routes.getAlternate);
 
 app.listen(8081, () => {
 	console.log(`Server listening on PORT 8081`);
