@@ -53,7 +53,7 @@ const recComics = (req, res) => {
         WHERE comicID NOT IN (SELECT comicID FROM temp1)
         GROUP BY c.comicID
         ORDER BY COUNT(*) DESC
-        LIMIT 20
+        LIMIT 10
         ),
 
     temp4 AS
@@ -85,8 +85,15 @@ const recComics = (req, res) => {
 
 const getCharacter = (req, res) => {
   const query = `
-    SELECT name
+    SELECT *
     FROM Characters
+    WHERE characterID IN
+        (
+        SELECT characterID
+        FROM Chatocomics
+        GROUP BY characterID
+        HAVING COUNT(*)>1
+        )
     ORDER BY name ASC;
   `;
 
@@ -123,7 +130,7 @@ const recCharacters = (req, res) => {
         WHERE c.characterID != (SELECT characterID FROM temp1)
         GROUP BY c.characterID
         ORDER BY COUNT(*) DESC
-        LIMIT 20
+        LIMIT 10
         ),
 
     temp4 AS

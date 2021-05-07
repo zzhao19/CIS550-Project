@@ -1,7 +1,6 @@
 import React from 'react';
 import '../style/PowerCompete.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import Chart from 'react-apexcharts'
 import PageNavbar from './PageNavbar';
 import CharButton from './CharButton';
 import AlignButton from './AlignButton';

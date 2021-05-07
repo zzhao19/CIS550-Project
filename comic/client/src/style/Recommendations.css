@@ -1,0 +1,87 @@
+.jumbotron-comicsearch{
+  position: relative;
+  font-family: sans-serif;
+  left: -7.4%;
+  width: 110%;
+  opacity: 1;
+}
+
+.jumbotron-comicsresult{
+  position: relative;
+  left: -5%;
+  width: 120%;
+  opacity: 0.9;
+}
+
+.jumbotron-characterssearch{
+  position: relative;
+  font-family: sans-serif;
+  left: -6.9%;
+  width: 105%;
+  opacity: 1;
+}
+
+.jumbotron-charactersresult{
+  position: relative;
+  left: -5%;
+  width: 123%;
+  opacity: 0.9;
+}
+
+.comics-container {
+  display: flex;
+  flex-flow: column wrap;
+  font-family: sans-serif;
+  margin-top: 5px;
+}
+
+.comics-container .comic, .comics-container .comicResults {
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: sans-serif;
+  align-items: center;
+  margin-top: 20px;
+  padding: 0 1px;
+  padding: 0 1px;
+}
+
+.comic .header0, .comicResults .title {
+  flex:1 0 5%;
+}
+
+.comic .header1, .comicResults .issueYear, .comicResults .issueNumber, .comicResults .numChar{
+  flex:1 0 0%;
+}
+
+.comic .header2, .comicResults .commonChar{
+  flex:1 0 20%;
+}
+
+.characters-container {
+  display: flex;
+  flex-flow: column wrap;
+  font-family: sans-serif;
+  margin-top: 0px;
+}
+
+.characters-container .character, .characters-container .characterResults {
+  display: flex;
+  flex-flow: row nowrap;
+  font-family: sans-serif;
+  align-items: center;
+  height: auto;
+  margin-top: 20px;
+  padding: 0 1px;
+}
+
+.character .header0, .characterResults .name {
+  flex:1 0 0%;
+}
+
+.character .header1, .characterResults .numBooks, .characterResults .topMatchBook, .characterResults .alignment{
+  flex:1 0 2%;
+}
+
+.character .header2, .characterResults .superpowers{
+  flex:1 0 35%;
+}
