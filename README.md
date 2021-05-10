@@ -10,6 +10,13 @@ Note:
 1. the comics -> db-config.js file has been updated with our new configs, haven't tested whether it works tho
 2. please ignore the 0 files, they are just placeholders for yet empty folders
 
+## Data Source
+[Kaggle: Marvel Superheroes](https://www.kaggle.com/dannielr/marvel-superheroes?select=comics.csv&fbclid=IwAR14jh0cRV1knD8Q5lk4ViDtkL20UXJ7TNHdQVqU_Knw12cwqUdD04io8v0)<br>
+[Marvel Wikia](https://marvel.fandom.com/wiki/Marvel_Database)<br>
+[DC Wikia](https://dc.fandom.com/wiki/DC_Comics_Database)<br>
+[Fivethirtyeight](https://github.com/fivethirtyeight/data/tree/master/comic-characters)<br>
+[IMDB for MCU and DCU](https://www.imdb.com/interfaces/?fbclid=IwAR1svB-l6jj7L_NZf3QUUCEn1WLbQcpYKAwMHq91Si0jAq1qBJ437g5BOhU)<br>
+
 ## List of dependencies
 Please also refer the the package.json files:  <br>
  <br>
