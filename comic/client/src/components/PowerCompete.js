@@ -1,22 +1,22 @@
 import React from 'react';
+import Chart from 'react-apexcharts'
+
 import '../style/PowerCompete.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-// import Chart from 'react-apexcharts'
+
 import PageNavbar from './PageNavbar';
 import CharButton from './CharButton';
 import AlignButton from './AlignButton';
 import PowerCompeteRow from './PowerCompeteRow';
 import ScoreTableRow from './ScoreTableRow';
-import {options} from './RadarElements';
-import Chart from 'react-apexcharts'
+import {options, option_bar} from './RadarElements';
+
 
 
 export default class PowerCompete extends React.Component {
     constructor(props) {
       super(props);
   
-      // The state maintained by this React Component. This component maintains the list of characters,
-      // and a list of movies for a specified keyword.
       this.state = {
         alignment: [],
         characters: [],
@@ -24,8 +24,8 @@ export default class PowerCompete extends React.Component {
         scores: [],
         selectedAlign: "",
         selectedChar: "",
-        series:[],
-        options:options
+        series: [],
+        lst1: []
       };
 
       this.showCharacters = this.showCharacters.bind(this);
@@ -34,103 +34,87 @@ export default class PowerCompete extends React.Component {
   
     };
   
-    // React function that is called when the page load.
+    // load alignment choice options when page launch
     componentDidMount() {
-        // Send an HTTP request to the server.
         fetch("http://localhost:8081/power",
-        {
-          method: 'GET' // The type of HTTP request.
+        {method: 'GET'
         }).then(res => {
-          // Convert the response data to a JSON.
           return res.json();
         }, err => {
-          // Print the error if there is one.
           console.log(err);
         }).then(alignList => {
           if (!alignList) return;
-          // Map each keyword in this.state.keywords to an HTML element:
-          // A button which triggers the showMovies function for each keyword.
           
+          // map query outputs to buttons for display
           const alignDivs = alignList.map((alignObj, i) =>
+
           <AlignButton 
             id={"button-" + alignObj.alignment} 
             onClick={() => {this.showCharacters(alignObj.alignment);
             this.setState({selectedAlign:alignObj.alignment})}}
             align={alignObj.alignment} 
-          /> 
-        );
+          /> );
           
-    
-          // Set the state of the keywords list to the value returned by the HTTP response from the server.
           this.setState({
             alignment: alignDivs
           });
         }, err => {
-          // Print the error if there is one.
           console.log(err);
         });
       };
 
 
+    // show the most popular characters for chosen align
     showCharacters(align) {
-      // Send an HTTP request to the server.
       fetch("http://localhost:8081/power/" + align,
-      {
-        method: 'GET' // The type of HTTP request.
+      {method: 'GET'
       }).then(res => {
-        // Convert the response data to a JSON.
         return res.json();
       }, err => {
-        // Print the error if there is one.
         console.log(err);
       }).then(charList => {
         if (!charList) return;
-        // Map each keyword in this.state.keywords to an HTML element:
-        // A button which triggers the showMovies function for each keyword.
-        
+
         const charDivs = charList.map((charObj, i) =>
-          <CharButton 
-            id={"button-" + charObj.name} 
-            onClick={() => {this.showPowers(charObj.name);
-              this.showScores(charObj.name);
-            this.setState({selectedChar:charObj.name+"'s "})}} 
-            char={charObj.name} 
-          /> 
+
+        // map characters to onclick events
+        <CharButton 
+          id={"button-" + charObj.name} 
+          onClick={() => {this.showPowers(charObj.name);
+            this.showScores(charObj.name);
+          this.setState({selectedChar:charObj.name+"'s "})}} 
+          char={charObj.name} 
+        /> 
         );
-  
-        // Set the state of the keywords list to the value returned by the HTTP response from the server.
+
         this.setState({
           characters: charDivs
         });
       }, err => {
-        // Print the error if there is one.
         console.log(err);
       });
     };
-  
 
 
+    // show power list for the chosen character
     showPowers(char) {
       const power_url = 'http://localhost:8081/power/:align/' + char;
       fetch(power_url,
-      { 
-        method: "GET"
+      {method: "GET"
       })
       .then(res => {
-        console.log(power_url);
         return res.json();
       }, err => {
         console.log(err);
       })
       .then(powerList => {
-
         if (!powerList) return;
-
         let powerLst = [];
 
+        // handle cases where there's no data about a character in record
         if (powerList.length !== 0) {
+
           powerLst = powerList.map((powerObj, i) =>
-        
           <PowerCompeteRow
             power_name={powerObj.power}
           />
@@ -138,9 +122,6 @@ export default class PowerCompete extends React.Component {
         } else {
           powerLst = ['Oops, data not found']
         }
-
-        console.log(powerLst);
-        
         this.setState({
           powers: powerLst
         });
@@ -150,14 +131,12 @@ export default class PowerCompete extends React.Component {
     };
 
 
-
+    // retrive power dimension scores for chosen character
+    // pass results to graphs
     showScores(char) {
-      console.log('show scores func')
       const score_url = 'http://localhost:8081/power/:align/:char/' + char;
-      console.log(score_url);
       fetch(score_url,
-      { 
-        method: "GET"
+      {method: "GET"
       })
       .then(res => {
         return res.json();
@@ -166,17 +145,11 @@ export default class PowerCompete extends React.Component {
       })
       .then(scores => {
         if (!scores) return;
-        console.log(scores);
-        // const rows = scores.map((scoreObj, i) => 
-        //     <ScoreTableRow
-        //       category={scoreObj.Category}
-        //       score={scoreObj.Score}
-        //     />
-        //     );
-
         let rows = null;
         let scoreArr = null;
+        let ab = null;
 
+        // handle no data found scenarios
         if (scores.length !== 0) {
             rows = scores.map((scoreObj, i) => 
             <ScoreTableRow
@@ -187,7 +160,7 @@ export default class PowerCompete extends React.Component {
             scoreArr = scores.map((scoreObj, i) => scoreObj.Score);
         } else {
             rows = ['Oops, data not found'];
-            scoreArr = [0,0,0,0,0,0]
+            scoreArr = [0,0,0,0,0,0]; // pass in 0s to later charts when no data found
         }
 
         const seriesName = char;
@@ -195,9 +168,10 @@ export default class PowerCompete extends React.Component {
         this.setState({
           scores: rows,
           series: [{name: seriesName,
-            data: scoreArr}]
+            data: scoreArr}], // structure the output as needed for chart-making parameters
+          lst1: scoreArr
         });
-        console.log(rows);
+
       }, err => {
         console.log(err);
       });
@@ -206,74 +180,65 @@ export default class PowerCompete extends React.Component {
     render() {    
       return (
         <div className="PowerCompete">
-  
           <PageNavbar active="PowerCompete" />
-
+          <h1 class='text-center text-light'> <br/> Power Statistics! </h1>
+          
           <br />
           <div className="container powers-container">
-
             <div className="jumbotron">
                 <div className="h4"><b>Pick a side!</b></div>
                 <div className="aligns-container">
-                {this.state.alignment}
+                  {this.state.alignment}
                 </div>
             </div>
 
-            <br />
-            <div className="jumbotron">
-              <div className="h4"><b>Most Popular <var>{this.state.selectedAlign}</var> Characters Top 30</b></div>
-              <div className="chars-container">
-                {this.state.characters}
-              </div>
+          <br />
+          <div className="jumbotron">
+            <div className="h4"><b>Most Popular <var>{this.state.selectedAlign}</var> Characters Top 30</b></div>
+            <div className="chars-container">
+              {this.state.characters}
             </div>
-
-
-            <div class='container'>
-                <div class='row'>
-                    <div class="col-lg-6">
-                    <div className="jumbotron jumbotron-left">
-                        <div className="powers-container">
-                            <div className="powers-header">
-                            <div className="header-lg"><strong><var>{this.state.selectedChar}</var>Superpowers</strong></div>
-                            </div>
-                            <div className="results-container" id="results">
-                            {this.state.powers}
-                            </div>
-                        </div>
-                        </div>
-
-                    </div>
-
-                    <div class="col-lg-6">
-                        
-                        <div className="jumbotron jumbotron-right">
-                            <div id="chart">
-                                <Chart options={this.state.options} series={this.state.series} type="radar" height={350} />
-                            </div>
-                        </div>
-
-                        <div className="jumbotron jumbotron-right">
-                            <div className="scores-container">
-                                <div className="scores-header">
-                                <div className="header-lg"><strong>Dimension</strong></div>
-                                <div className="header"><strong>Score</strong></div>
-                                </div>
-                                <div className="results-container" id="results">
-                                {this.state.scores}
-                                </div>
-                            </div>
-                        </div>
-
-                        
-                    </div>
-                    
-                    
-                </div>
-            </div>
-
           </div>
 
+
+          <div class='container'>
+            <div class='row'>
+              <div class="col-lg-6">
+                <div className="jumbotron jumbotron-left">
+                  <div className="powers-container">
+
+                    {/* show selected align in header */}
+                    <div className="powers-header">
+                      <div className="header-lg"><strong><var>{this.state.selectedChar}</var>Superpowers</strong></div>
+                    </div>
+
+                    {/* show character search output */}
+                    <div className="results-container" id="results">
+                      {this.state.powers}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-lg-6">
+                <div className="jumbotron jumbotron-right">
+                  {/* radar chart for dimension stats */}
+                  <div id="chart">
+                    <Chart options={options} series={this.state.series} type="radar" height={350} />
+                  </div>
+                </div>
+
+                <div className="jumbotron jumbotron-right">
+                  {/* grouped bar charts for dimension comparison against average */}
+                  <div id="chart">
+                    <Chart options={option_bar} series={[{data:this.state.lst1},{data:[57.03,58.37,56.99,52.7,34.64,43.57]}]} type="bar" height={350} />
+                  </div>
+                </div>  
+              </div>  
+            </div>
+          </div>
         </div>
+      </div>
       );
     };
   };

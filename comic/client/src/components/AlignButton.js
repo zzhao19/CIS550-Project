@@ -2,13 +2,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class AlignButton extends React.Component {
-	/* props looks like:
-		{
-			id
-			onClick
-			keyword
-		}
-	*/
+
+	// define the alignment choice buttons in PowerCompete.js
 	
 	render() {
 		return (

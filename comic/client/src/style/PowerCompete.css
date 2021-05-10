@@ -1,9 +1,7 @@
 .aligns-container {
-    /* margin: 10px 0; */
     display: flex;
     flex-flow: row wrap;
     justify-content: flex-start;
-    /* border-bottom: 1px solid #ddd; */
   }
   
   .aligns-container .align {
@@ -20,11 +18,9 @@
   
   
   .chars-container {
-      /* margin: 10px 0; */
       display: flex;
       flex-flow: row wrap;
       justify-content: flex-start;
-      /* border-bottom: 1px solid #ddd; */
     }
     
   .chars-container .char {

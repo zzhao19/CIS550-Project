@@ -1,6 +1,7 @@
-import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import styled from "styled-components";
+
+/* define some tab properties we might use*/
 
 export const Tabs = styled.div`
   overflow: hidden;
@@ -28,6 +29,7 @@ export const Tab = styled.button`
     background-color: white;
   }
 `;
+
 export const Content = styled.div`
   ${props => (props.active ? "" : "display:none")}
 `;
