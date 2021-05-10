@@ -2,6 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class BestCharactersRow extends React.Component {
+
+	// define the display content of best character recommendation results in Recommendation.js
+
 	render() {
 		return (
 			<div className="characterResults">

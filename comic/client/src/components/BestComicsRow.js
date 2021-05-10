@@ -2,7 +2,9 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class BestComicsRow extends React.Component {
-	/* ---- Q3b (Best Movies) ---- */
+	
+	// define the return content of search outputs for best comics in Recommendations.js
+
 	render() {
 		return (
 			<div className="comicResults">

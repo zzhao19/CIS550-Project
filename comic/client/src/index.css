@@ -17,17 +17,20 @@ code {
   width: 45%;
 }
 
+/* for left indentation and border align */
 .jumbotron-left {
   position: relative;
   left: -2.7%;
 }
 
+/* for right indentation and border align */
 .jumbotron-right {
   position: relative;
   right: -2.7%;
 }
 
 
+/* home page welcome image */
 .jumbotron-home{
   padding-top: 0px;
   padding-bottom:0px;

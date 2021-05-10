@@ -1,39 +1,39 @@
 .jumbotron-comicsearch{
   position: relative;
   font-family: sans-serif;
-  left: -7.4%;
+  /* left: -7.4%; */
   width: 110%;
   opacity: 1;
 }
 
 .jumbotron-comicsresult{
   position: relative;
-  left: -5%;
-  width: 120%;
-  opacity: 0.9;
+  width: 100%;
 }
 
 .jumbotron-characterssearch{
   position: relative;
   font-family: sans-serif;
-  left: -6.9%;
-  width: 105%;
+  width: 110%;
   opacity: 1;
+  left: -4%;
 }
 
 .jumbotron-charactersresult{
   position: relative;
-  left: -5%;
-  width: 123%;
-  opacity: 0.9;
+  width: 100%;
+  left: 1.5%;
+  justify-content: center;
 }
 
 .comics-container {
   display: flex;
   flex-flow: column wrap;
   font-family: sans-serif;
+  width: 102.7%;
   margin-top: 5px;
 }
+
 
 .comics-container .comic, .comics-container .comicResults {
   display: flex;
@@ -44,6 +44,7 @@
   padding: 0 1px;
   padding: 0 1px;
 }
+
 
 .comic .header0, .comicResults .title {
   flex:1 0 5%;
@@ -61,7 +62,8 @@
   display: flex;
   flex-flow: column wrap;
   font-family: sans-serif;
-  margin-top: 0px;
+  width: 100%;
+  margin-top: 5px;
 }
 
 .characters-container .character, .characters-container .characterResults {
@@ -69,8 +71,8 @@
   flex-flow: row nowrap;
   font-family: sans-serif;
   align-items: center;
-  height: auto;
   margin-top: 20px;
+  padding: 0 1px;
   padding: 0 1px;
 }
 

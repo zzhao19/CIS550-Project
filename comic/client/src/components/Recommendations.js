@@ -17,11 +17,11 @@ export default class Recommendations extends React.Component {
 		super(props);
 
 		this.state = {
-		    labelField: "props.value",
-		    valueField: "props.value",
-		    searchable: true,
+      labelField: "props.value",
+      valueField: "props.value",
+      searchable: true,
 			selectedTitle: "",
-            selectedName: "",
+      selectedName: "",
 			titles: [],
 			comics: [],
 			names: [],
@@ -34,6 +34,7 @@ export default class Recommendations extends React.Component {
 		this.handleNameChange = this.handleNameChange.bind(this);
 	};
 
+  // on load retrive all comic titles and characters
 	componentDidMount() {
         fetch("http://localhost:8081/title",{
           method: 'GET'
@@ -74,20 +75,22 @@ export default class Recommendations extends React.Component {
         });
      };
 
-	handleTitleChange(e){
-		this.setState(
-		    {selectedTitle:e[0].props.value},
-		    ()=>console.log(this.state.selectedTitle)
-		);
-	};
+  // handle comic and character selection events
+  handleTitleChange(e){
+    this.setState(
+        {selectedTitle:e[0].props.value},
+        ()=>console.log(this.state.selectedTitle)
+    );
+  };
 
-	handleNameChange(e){
-		this.setState(
-		    {selectedName:e[0].props.value},
-		    ()=>console.log(this.state.selectedName)
-		);
-	};
+  handleNameChange(e){
+    this.setState(
+        {selectedName:e[0].props.value},
+        ()=>console.log(this.state.selectedName)
+    );
+  };
 
+  // pass in selected comic book title to query and retrive outputs
 	submitTitle() {
 	    const myUrlWithParams = `http://localhost:8081/bestcomics/${this.state.selectedTitle}`;
 
@@ -99,6 +102,7 @@ export default class Recommendations extends React.Component {
         }, err => {console.log(err);
         }).then(comicsList => {if (!comicsList) return;
         console.log(comicsList)
+
         const comicsDivs = comicsList.map((comicObj, i) =>
           <BestComicsRow
             title={comicObj.title}
@@ -113,11 +117,11 @@ export default class Recommendations extends React.Component {
             comics: comicsDivs
           });
         }, err => {
-          // Print the error if there is one.
           console.log(err);
         });
 	};
 
+  // pass selected character name to query and retrive outputs
 	submitName() {
 	    const myUrlWithParams = `http://localhost:8081/bestcharacters/${this.state.selectedName}`;
 
@@ -129,6 +133,7 @@ export default class Recommendations extends React.Component {
         }, err => {console.log(err);
         }).then(charactersList => {if (!charactersList) return;
         console.log(charactersList)
+
         const charactersDivs = charactersList.map((characterObj, i) =>
           <BestCharactersRow
             name={characterObj.Name}
@@ -153,6 +158,7 @@ export default class Recommendations extends React.Component {
 	    const{selectedTitle}=this.state;
 	    const{selectedName}=this.state;
 
+      // image urls for sliders
 	    const comicimages = [
           {url: "https://static01.nyt.com/images/2018/05/15/learning/TeenTitansLN/TeenTitansLN-jumbo.jpg?quality=90&auto=webp"},
           {url: "https://www.verdict.co.uk/wp-content/uploads/2017/09/get-into-comic-books.jpg"},
@@ -172,126 +178,136 @@ export default class Recommendations extends React.Component {
 		return (
 			<div className="Recommendations">
 				<PageNavbar active="bestcomics" />
+        <h1 class='text-center text-light'> <br/> Need Recommendations? </h1>
+        
+        {/* create tabs for both 
+        comic recommendation and character recommendation*/}
+        <Tabs>
 
-				<h1 class='text-center text-light'> <br/> Need Recommendations? </h1>
+            <TabList>
+              <Tab>Recommend Some Comic Books</Tab>
+              <Tab>Recommend Some Characters</Tab>
+            </TabList>
 
-                <Tabs>
+            {/* first tab: recommend comics based on comic provided */}
+            <TabPanel>
+              <div className="container">
+                <div class='row'>
+                  <div class='col-md-8 col-lg-6'>
+                    <div className="jumbotron jumbotron-comicsearch">
+                      <div className="h5">Find the Best Comic Books For You  </div>
+                      
+                      {/* dropdown list properties*/}
+                        <Select
+                            placeholder='Please select your favorite comic book title'
+                            options={this.state.titles}
+                            value={selectedTitle}
+                            searchable={this.state.searchable}
+                            labelField={this.state.labelField}
+                            valueField={this.state.valueField}
+                            onChange={this.handleTitleChange}
+                            id="titlesDropdown"
+                        />
+                        <br/>
+                        <button className="submit-btn" id="submitBtn" onClick={this.submitTitle}>Submit</button>
+                    </div>
+                  </div>
 
-                    <TabList>
-                      <Tab>Recommend Some Comic Books</Tab>
-                      <Tab>Recommend Some Characters</Tab>
-                    </TabList>
+                  {/* slider properties */}
+                  <div class='col-md-6 col-lg-6'>
+                    <div className='container'>
+                      <SimpleImageSlider
+                      style={{ marginLeft: '8%', marginTop: '0%' }}
+                      navStyle={2}
+                      width={515}
+                      height={248}
+                      images={comicimages}
+                      showBullets={true}
+                      showNavs={true}
+                      slideDuration={0.3}
+                      />
+                    </div>
+                  </div>
+                </div>
 
-                    <TabPanel>
-                        <div className="container bestcomics-container">
-                            <div class='row'>
-                                <div class='col-md-8 col-lg-8'>
-                                    <div className="jumbotron jumbotron-comicsearch">
-                                        <div className="h5">Find the Best Comic Books For You  </div>
-
-                                            <Select
-                                                placeholder='Please select your favorite comic book title'
-                                                options={this.state.titles}
-                                                value={selectedTitle}
-                                                searchable={this.state.searchable}
-                                                labelField={this.state.labelField}
-                                                valueField={this.state.valueField}
-                                                onChange={this.handleTitleChange}
-                                                id="titlesDropdown"
-                                            />
-                                            <br/>
-                                            <button className="submit-btn" id="submitBtn" onClick={this.submitTitle}>Submit</button>
-                                    </div>
-                                </div>
-
-                                <div class='col-md-4 col-lg-4'>
-                                    <div>
-                                          <SimpleImageSlider
-                                            style={{ marginLeft: '0%', marginTop: '0%' }}
-                                            navStyle={2}
-                                            width={515}
-                                            height={248}
-                                            images={comicimages}
-                                            showBullets={true}
-                                            showNavs={true}
-                                            slideDuration={0.3}
-                                          />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="jumbotron jumbotron-comicsresult">
-                                <div className="comics-container">
-                                    <div className="comic">
-                                      <div className="header0"><strong>Title</strong></div>
-                                      <div className="header1"><strong>Issue Year</strong></div>
-                                      <div className="header1"><strong>Issue Number</strong></div>
-                                      <div className="header1"><strong># Common Characters</strong></div>
-                                      <div className="header2"><strong>Common Characters Names</strong></div>
-                                    </div>
-                            <div className="comics-container" id="results">
-                              {this.state.comics}
-                            </div>
-                          </div>
-                        </div>
+                {/* recommendation result container */}
+                <div className="comics-container">
+                  <div className="jumbotron jumbotron-comicsresult">
+                    <div className="comic">
+                      <div className="header0"><strong>Title</strong></div>
+                      <div className="header1"><strong>Issue Year</strong></div>
+                      <div className="header1"><strong>Issue Number</strong></div>
+                      <div className="header1"><strong># Common Characters</strong></div>
+                      <div className="header2"><strong>Common Characters Names</strong></div>
                       </div>
-                    </TabPanel>
-
-                    <TabPanel>
-                        <div className="container characters-container">
-                            <div class='row'>
-                                <div class='col-md-8 col-lg-7'>
-                                    <div className="jumbotron jumbotron-characterssearch">
-                                        <div className="h5">Find the Best Characters For You</div>
-
-                                            <Select
-                                                placeholder='Please select your favorite character name'
-                                                options={this.state.names}
-                                                value={selectedName}
-                                                searchable={this.state.searchable}
-                                                labelField={this.state.labelField}
-                                                valueField={this.state.valueField}
-                                                onChange={this.handleNameChange}
-                                                id="namesDropdown"
-                                            />
-                                            <br/>
-                                            <button className="submit-btn" id="submitBtn" onClick={this.submitName}>Submit</button>
-                                    </div>
-                                 </div>
-
-                                <div class='col-md-4 col-lg-4'>
-                                    <div>
-                                          <SimpleImageSlider
-                                            style={{ marginLeft: '-20px', marginTop: '0%' }}
-                                            navStyle={2}
-                                            width={515}
-                                            height={248}
-                                            images={characterimages}
-                                            showBullets={true}
-                                            showNavs={true}
-                                            slideDuration={0.3}
-                                          />
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div className="jumbotron jumbotron-charactersresult">
-                                <div className="characters-container">
-                                    <div className="character">
-                                      <div className="header0"><strong>Name</strong></div>
-                                      <div className="header1"><strong># Matching Books</strong></div>
-                                      <div className="header1"><strong>Top Match Book</strong></div>
-                                      <div className="header1"><strong>Alignment</strong></div>
-                                      <div className="header2"><strong>Superpowers</strong></div>
-                                    </div>
-                            <div className="characters-container" id="results">
-                              {this.state.characters}
-                            </div>
-                          </div>
-                        </div>
+                      <div className="comics-container" id="results">
+                        {this.state.comics}
                       </div>
-                    </TabPanel>
-                </Tabs>
+                  </div>
+                </div>
+              </div>
+            </TabPanel>
+
+            {/* seond tab: recommending characters based on a chosen character */}
+            <TabPanel>
+              <div className="container">
+                <div class='row'>
+                  <div class='col-md-6 col-lg-6'>
+                    <div className='container'>
+                      {/* another image slider woohoo */}
+                      <SimpleImageSlider
+                      style={{ marginRight: '4%', marginTop: '0%' }}
+                      navStyle={2}
+                      width={515}
+                      height={248}
+                      images={characterimages}
+                      showBullets={true}
+                      showNavs={true}
+                      slideDuration={0.3}
+                      />
+                    </div>
+                  </div>
+
+                  <div class='col-md-6 col-lg-6'>
+                    <div className='container'>
+                      <div className="jumbotron jumbotron-characterssearch">
+                        <div className="h5">Find the Best Characters For You</div>
+                        {/* character selection dropdown */}
+                        <Select
+                        placeholder='Please select your favorite character name'
+                        options={this.state.names}
+                        value={selectedName}
+                        searchable={this.state.searchable}
+                        labelField={this.state.labelField}
+                        valueField={this.state.valueField}
+                        onChange={this.handleNameChange}
+                        id="namesDropdown"
+                        />
+                        <br/>
+                        <button className="submit-btn" id="submitBtn" onClick={this.submitName}>Submit</button>
+                      </div>
+                    </div>
+                  </div>    
+                </div>
+
+                <div className="characters-container">
+                  <div className="jumbotron jumbotron-charactersresult">
+                    <div className="character">
+                      {/* use differently-centered header setups due to the variation in the length of output */}
+                      <div className="header0"><strong>Name</strong></div>
+                      <div className="header1"><strong># Matching Books</strong></div>
+                      <div className="header1"><strong>Top Match Book</strong></div>
+                      <div className="header1"><strong>Alignment</strong></div>
+                      <div className="header2"><strong>Superpowers</strong></div>
+                    </div>
+                    <div className="characters-container" id="results">
+                      {this.state.characters}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </TabPanel>
+        </Tabs>
 			</div>
 		);
 	};

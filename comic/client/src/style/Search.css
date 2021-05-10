@@ -1,0 +1,134 @@
+.jumbotron-comicsearch{
+    position: relative;
+    font-family: sans-serif;
+    opacity: 1;
+  }
+  
+  .jumbotron-appearancesearch{
+    position: relative;
+    font-family: sans-serif;
+    opacity: 1;
+    align-items: center;
+  }
+  
+  .appearance-container{
+    position: relative;
+  }
+  
+  .characters-container {
+    display: flex;
+    flex-flow: column wrap;
+    font-family: sans-serif;
+    margin-top: 0px;
+  }
+  
+  /* new stuff u are duplicating */
+  .top10series-container {
+    display: flex;
+    flex-flow: column wrap;
+    font-family: sans-serif;
+    margin-top: 0px;
+  }
+  
+  .appearance-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+  }
+  
+  .jumbotron-seriessearch{
+    position: relative;
+    font-family: sans-serif;
+    width: 100%;
+    opacity: 1;
+  }
+  
+  .jumbotron-seriesresult{
+    position: relative;
+    width: 100%;
+    opacity: 0.9;
+  }
+  
+  .jumbotron-appearanceresult{
+    position: relative;
+    opacity: 0.9;
+  }
+
+  .appearance-container .appearance, .appearance-container .appearanceResults {
+    display: flex;
+    font-family: sans-serif;
+    align-items: center;
+    height: auto;
+    width: 400px;
+    margin-top: 20px;
+    padding: 0 1px;
+  }
+  
+
+  .top10series-container .series, .top10series-container .seriesResults {
+    display: flex;
+    flex-flow: row nowrap;
+    font-family: sans-serif;
+    align-items: center;
+    height: auto;
+    margin-top: 20px;
+    padding: 0 1px;
+  }
+  
+  .series .header0, .seriesResults .title {
+    flex:1 0 0%;
+  }
+  
+  .appearance .header0, .appearanceResults .Character{
+    flex:1 0 0%;
+  }
+  
+  .series .header1, .seriesResults .num, .seriesResults .alignment{
+    flex:1 0 2%;
+  }
+  
+  .charsFromTitle-container .charSeries, .charsFromTitle-container .charsFromTitleResults {
+    display: flex;
+    flex-flow: row nowrap;
+    font-family: sans-serif;
+    margin-top: 20px;
+    padding: 0 1px;
+    padding: 0 1px;
+  }
+  
+  .charSeries .header0, .charsFromTitleResults .Character {
+    flex:1 0 5%;
+  }
+  
+  .charSeries .header1, .charSeries .header2, .charSeries .header3, .charsFromTitleResults .Alignment, .charsFromTitleResults .Gender, .charsFromTitleResults .Status{
+    flex:1 0 0%;
+  }
+  
+  /*end of new stuff */
+  .characters-container .character, .characters-container .characterResults {
+    display: flex;
+    flex-flow: row nowrap;
+    font-family: sans-serif;
+    align-items: center;
+    height: auto;
+    margin-top: 20px;
+    padding: 0 1px;
+  }
+  
+  .character .header0, .characterResults .name {
+    flex:1 0 0%;
+  }
+  
+  .character .header1, .characterResults .numBooks, .characterResults .topMatchBook, .characterResults .alignment{
+    flex:1 0 2%;
+  }
+  
+  .character .header2, .characterResults .superpowers{
+    flex:1 0 35%;
+  }
+  
+  .appearance-container .appearance, .appearance-container .appearanceResults {
+    align-items: center;
+    text-align: center;
+  }
+  

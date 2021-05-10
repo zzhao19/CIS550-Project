@@ -2,13 +2,8 @@ import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default class CharButton extends React.Component {
-	/* props looks like:
-		{
-			id
-			onClick
-			keyword
-		}
-	*/
+
+	// define the most popular characters display in PowerCompete.js
 	
 	render() {
 		return (

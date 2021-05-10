@@ -208,6 +208,36 @@ const getAlignment = (req, res) => {
   })
 };
 
+const getAlignAvg = (req, res) => {
+
+  const alignInput = req.params.align;
+
+  const query = `
+    with t as (select c.*, ci.alignment
+      from Chastats c
+      join Charinfo ci
+      on c.Name = ci.Character)
+      
+      t2 as (select Alignment, Category, round(avg(Score),2) Average
+      from t 
+      where Category<>'Total' and Alignment <> '' 
+      group by Alignment, Category)
+
+      select Category, Average
+      from t2 
+      where Alignment = '${alignInput}'
+      order by Category;
+  `;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
 
 const getTop30Sups = (req, res) => {
   const alignInput = req.params.align;
@@ -258,8 +288,6 @@ const getTop30Sups = (req, res) => {
 };
 
 
-
-/* 1.4.2 */
 const getTopSupsPower = (req, res) => {
 
   const supInput = req.params.char;
@@ -288,7 +316,8 @@ const getScores = (req, res) => {
   const query = `
     select c.Category, Score
     from Chastats c
-    where c.Name = '${supInput}' and c.Category <> 'Total';
+    where c.Name = '${supInput}' and c.Category <> 'Total'
+    order by Category;
   `;
 
   connection.query(query, function(err, rows, fields){
@@ -301,13 +330,277 @@ const getScores = (req, res) => {
 };
 
 
+/* -------------------------------------------------- */
+/* ----------------------- Movie -------------------- */
+/* -------------------------------------------------- */
+const getMovies = (req, res) => {
+
+  console.log('we are here')
+
+  const query = `
+    SELECT DISTINCT movie FROM CastIn;
+  `;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
+const getSimilarComics = (req, res) => {
+
+  const title = req.params.movie;
+
+  const query = `
+    WITH temp AS (
+    SELECT c.characterID, cc.comicID
+    FROM CastIn c
+    JOIN Chatocomics cc on c.characterID = cc.characterID
+    WHERE c.Movie = '${title}'
+    )
+
+    SELECT cc.Title, cc.issueYear, cc.issueNumber, cc.description
+    FROM CastIn c
+    JOIN temp t ON c.characterID = t.characterID
+    JOIN Comics cc on t.comicID = cc.comicID
+    WHERE c.Movie LIKE '%${title}%'
+    GROUP BY cc.comicID
+    ORDER BY COUNT(*) DESC
+    LIMIT 10;
+  `;
+
+  connection.query(query, function(err, rows, fields){
+    if (err) console.log(err);
+    else {
+      console.log(rows);
+      res.json(rows);
+    }
+  })
+};
+
+  const getAlternate = (req, res) => {
+
+      const title = req.params.movie;
+
+      const query = `
+        (WITH t1 as (SELECT DISTINCT cc.comicID as comicID
+        FROM CastIn c
+        JOIN Chatocomics cc on c.characterID = cc.characterID
+        WHERE c.Movie = '${title}'),
+
+        t2 AS(SELECT DISTINCT cc.characterID, cc.comicID, Characters.name
+        FROM Chatocomics cc
+        JOIN Characters on Characters.characterID = cc.characterID
+        WHERE cc.comicID IN (SELECT comicID FROM t1 )),
+
+        t3 AS(SELECT cd.Alignment, t2.characterID, t2.comicID, t2.name
+            FROM Chadetail cd JOIN t2 on t2.name= cd.Name
+            WHERE cd.Alignment <> 'Neutral')
+        SELECT DISTINCT name, alignment as alignment FROM t3
+        WHERE alignment = 'good'
+        ORDER BY RAND()
+        LIMIT 3)
+        UNION
+        (SELECT DISTINCT name, alignment as alignment FROM t3
+        WHERE alignment = 'bad'
+        ORDER BY RAND()
+        LIMIT 3);`
+      ;
+
+      connection.query(query, function(err, rows, fields){
+        if (err) console.log(err);
+        else {
+          console.log(rows);
+          res.json(rows);
+        }
+      })
+};
+
+
+
+/* -------------------------------------------------- */
+/* ----------------------- Search -------------------- */
+/* -------------------------------------------------- */
+//appearance queries
+const getEyeColor = (req, res) => {
+  const query = `
+    SELECT DISTINCT ci.EyeColor
+    FROM Charinfo ci
+    WHERE ci.EyeColor != ""
+    ORDER BY EyeColor ASC;
+  `;
+  connection.query(query, (err, rows, fields) => {
+    if (err) console.log(err);
+
+    else
+    console.log(rows);
+    res.json(rows);
+  });
+};
+
+const getHairColor = (req, res) => {
+  const query = `
+    SELECT DISTINCT ci.HairColor
+    FROM Charinfo ci
+    WHERE ci.HairColor != ""
+    ORDER BY HairColor ASC;
+  `;
+  connection.query(query, (err, rows, fields) => {
+    if (err) console.log(err);
+    else res.json(rows);
+  });
+};
+
+const getAlignmentAppearance = (req, res) => {
+  const query = `
+    SELECT DISTINCT ci.Alignment
+    FROM Charinfo ci
+    WHERE ci.Alignment != ""
+    ORDER BY Alignment ASC;
+  `;
+  connection.query(query, (err, rows, fields) => {
+    if (err) console.log(err);
+    else res.json(rows);
+  });
+};
+
+const getGender = (req, res) => {
+  const query = `
+    SELECT DISTINCT ci.Gender
+    FROM Charinfo ci
+    WHERE ci.Gender != ""
+    ORDER BY Gender ASC;
+  `;
+  connection.query(query, (err, rows, fields) => {
+    if (err) console.log(err);
+    else res.json(rows);
+  });
+};
+
+const getUniverse = (req, res) => {
+  const query = `
+    SELECT DISTINCT ci.Universe
+    FROM Charinfo ci
+    WHERE ci.Universe != ""
+    ORDER BY Universe ASC;
+  `;
+  connection.query(query, (err, rows, fields) => {
+    if (err) console.log(err);
+    else res.json(rows);
+  });
+};
+
+const top10Series = (req, res) => {
+    console.log('GET RECSDT');
+    var charName = req.params.charName;
+    console.log(charName);
+    var query = `
+    WITH temp1 AS (
+      SELECT characterID
+      FROM Characters
+      WHERE name = '${charName}'
+    ),
+    temp2 AS (
+      SELECT c.comicID
+      FROM Chatocomics c
+      JOIN temp1 t1 ON c.characterID = t1.characterID)
+    SELECT c.title, COUNT(*) AS num
+    FROM Comics c JOIN temp2 t2
+    ON c.comicID = t2.comicID
+    GROUP BY c.title
+    ORDER BY num DESC
+    LIMIT 10;`;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log('FINISHED QUERYING');
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+};
+
+const appearance = (req, res) => {
+  var eyeColor = req.params.eyeColor;
+  var gender = req.params.gender;
+  var alignment = req.params.alignment;
+  var hairColor = req.params.hairColor;
+  var universe = req.params.universe;
+
+  var query = `
+    SELECT DISTINCT ci.Character
+    FROM Charinfo ci
+    WHERE EyeColor = '${eyeColor}'
+    AND Gender = '${gender}'
+    AND HairColor = '${hairColor}'
+    AND Alignment = '${alignment}'
+    AND Universe = '${universe}'
+    ORDER BY Appearances DESC
+    LIMIT 20;`;
+  connection.query(query, function(err, rows, fields) {
+    if (err) console.log(err);
+    else {
+      console.log('FINISHED QUERYING');
+      console.log(rows);
+      res.json(rows);
+    }
+  });
+};
+
+
+const charsFromTitle = (req, res) => {
+  var title = req.params.titleName;
+  console.log('in the thing')
+
+  var query = `
+      WITH temp1 AS (
+            SELECT DISTINCT comicID
+            FROM Comics
+            WHERE title = '${title}'
+            ),
+            temp2 AS (
+            SELECT DISTINCT ct.characterID, c.name
+            FROM Chatocomics ct
+            JOIN temp1 t1 ON t1.comicID = ct.comicID
+            JOIN Characters c ON c.characterID = ct.characterID
+            )
+            SELECT DISTINCT ci.Character, ci.Alignment, ci.Gender, ci.Status, ci.Appearances
+            FROM Charinfo ci, temp2 t2
+            WHERE t2.name LIKE CONCAT('%', ci.Character, '%')
+            ORDER BY ci.Appearances DESC;`;
+
+    connection.query(query, function(err, rows, fields) {
+        if (err) console.log(err);
+        else {
+          console.log('FINISHED QUERYING');
+          console.log(rows);
+          res.json(rows);
+        }
+      });
+};
+
 module.exports = {
     getTitle: getTitle,
     recComics: recComics,
     getCharacter: getCharacter,
     recCharacters: recCharacters,
     getAlignment: getAlignment,
+    getAlignAvg: getAlignAvg,
     getTop30Sups: getTop30Sups,
     getTopSupsPower: getTopSupsPower,
-    getScores: getScores
+    getScores: getScores,
+    getSimilarComics: getSimilarComics,
+    getMovies: getMovies,
+    getAlternate: getAlternate,
+    top10Series: top10Series,
+    appearance: appearance,
+    getEyeColor : getEyeColor,
+    getHairColor : getHairColor,
+    getAlignmentAppearance : getAlignmentAppearance,
+    getUniverse : getUniverse,
+    getGender : getGender,
+    charsFromTitle : charsFromTitle
 };
